@@ -30,38 +30,114 @@
 /**
  * Add palettes to tl_content
  */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['dataExporterForm'] = '{type_legend},type,headline;{export_legend},exportFolder,exporter;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['dataExporterList'] = '{type_legend},type,headline;{export_legend},exportFolder,fileExtension,sortBy;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'exporter';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['dataExporterForm'] = '{type_legend},type,headline;{export_legend},exportFolder,exporter;{template_legend:hide},exporterFormTemplate;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['dataExporterList'] = '{type_legend},type,headline;{export_legend},exportFolder,fileExtension,sortBy;{template_legend:hide},exporterListTemplate;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
 /**
  * Add fields to tl_content
  */
 $GLOBALS['TL_DCA']['tl_content']['fields']['exportFolder'] = array
 (
-	'label'     => &$GLOBALS['TL_LANG']['tl_content']['exportFolder'],
-	'exclude'   => true,
-	'inputType' => 'fileTree',
-	'eval'      => array('fieldType'=>'radio', 'mandatory'=>true, 'files'=>false, 'filesOnly'=>false)
+	'label'              => &$GLOBALS['TL_LANG']['tl_content']['exportFolder'],
+	'exclude'            => true,
+	'inputType'          => 'fileTree',
+	'eval'               => array('fieldType'=>'radio', 'mandatory'=>true, 'files'=>false, 'filesOnly'=>false)
 );
 $GLOBALS['TL_DCA']['tl_content']['fields']['fileExtension'] = array
 (
-	'label'     => &$GLOBALS['TL_LANG']['tl_content']['fileExtension'],
-	'exclude'   => true,
-	'inputType' => 'select',
-	'options'   => explode(&$GLOBALS['TL_CONFIG']['allowedDownload']),
-	'eval'      => array('mandatory'=>true, 'tl_class'=>'w50')
+	'label'              => &$GLOBALS['TL_LANG']['tl_content']['fileExtension'],
+	'exclude'            => true,
+	'inputType'          => 'select',
+	'options'            => trimsplit(',', strtolower($GLOBALS['TL_CONFIG']['allowedDownload'])),
+	'eval'               => array('mandatory'=>true, 'tl_class'=>'w50')
 );
 $GLOBALS['TL_DCA']['tl_content']['fields']['exporter'] = array
 (
-	'label'     => &$GLOBALS['TL_LANG']['tl_content']['exporter'],
-	'exclude'   => true,
-	'inputType' => 'select',
-	'options'   => &$GLOBALS['TL_DATA_EXPORTER'],
-	'reference' => &$GLOBALS['TL_LANG']['DATA_EXPORTER'],
-	'eval'      => array('mandatory'=>true)
+	'label'              => &$GLOBALS['TL_LANG']['tl_content']['exporter'],
+	'exclude'            => true,
+	'inputType'          => 'select',
+	'options'            => &$GLOBALS['TL_DATA_EXPORTER'],
+	'reference'          => &$GLOBALS['TL_LANG']['DATA_EXPORTER'],
+	'eval'               => array('mandatory'=>true, 'submitOnChange'=>true)
+);
+$GLOBALS['TL_DCA']['tl_content']['fields']['exporterFormTemplate'] = array
+(
+	'label'              => &$GLOBALS['TL_LANG']['tl_content']['exporterFormTemplate'],
+	'default'            => 'ce_data_exporter_form_default',
+	'exclude'            => true,
+	'inputType'          => 'select',
+	'options_callback'   => array('DataExporterContentHelper', 'getDataExporterFormTemplates')
+);
+$GLOBALS['TL_DCA']['tl_content']['fields']['exporterListTemplate'] = array
+(
+	'label'              => &$GLOBALS['TL_LANG']['tl_content']['exporterListTemplate'],
+	'default'            => 'ce_data_exporter_list_default',
+	'exclude'            => true,
+	'inputType'          => 'select',
+	'options_callback'   => array('DataExporterContentHelper', 'getDataExporterListTemplates')
 );
 
+/**
+ * Class DataExporterContentHelper
+ *
+ * Provide miscellaneous methods that are used by the data configuration array.
+ * @copyright  Cliff Parnitzky 2012
+ * @author     Cliff Parnitzky
+ * @package    Controller
+ */
+class DataExporterContentHelper extends Backend {
 
+	const TPL_FORM = 'form';
+	const TPL_LIST = 'list';
+	
+	/**
+	 * Return all form templates as array
+	 * @param DataContainer
+	 * @return array
+	 */
+	public function getDataExporterFormTemplates(DataContainer $dc) {
+		return $this->getDataExporterTemplates($dc, DataExporterContentHelper::TPL_FORM);
+	}
+	
+	/**
+	 * Return all form templates as array
+	 * @param DataContainer
+	 * @return array
+	 */
+	public function getDataExporterListTemplates(DataContainer $dc) {
+		return $this->getDataExporterTemplates($dc, DataExporterContentHelper::TPL_LIST);
+	}
+	
+	/**
+	 * Return all template for given type as array
+	 * @param DataContainer
+	 * @param type
+	 * @return array
+	 */
+	private function getDataExporterTemplates(DataContainer $dc, $type) {
+		$intPid = $dc->activeRecord->pid;
 
+		if ($this->Input->get('act') == 'overrideAll') {
+			$intPid = $this->Input->get('id');
+		}
+
+		// Get the page ID
+		$objArticle = $this->Database->prepare("SELECT pid FROM tl_article WHERE id=?")
+									 ->limit(1)
+									 ->execute($intPid);
+
+		// Inherit the page settings
+		$objPage = $this->getPageDetails($objArticle->pid);
+
+		// Get the theme ID
+		$objLayout = $this->Database->prepare("SELECT pid FROM tl_layout WHERE id=? OR fallback=1 ORDER BY fallback")
+									->limit(1)
+									->execute($objPage->layout);
+
+		// Return all gallery templates
+		return $this->getTemplateGroup('ce_data_exporter_' . $type, $objLayout->pid);
+	}
+}
 
 ?>

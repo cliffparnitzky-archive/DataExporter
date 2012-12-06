@@ -36,6 +36,6 @@ $GLOBALS['TL_CTE']['dataExporter']['dataExporterList'] = 'ContentDataExporterLis
 /**
  * Data exporter empty option
  */  
-$GLOBALS['TL_DATA_EXPORTER'][] = 'CustomerDataExporter';
+$GLOBALS['TL_DATA_EXPORTER'][] = '';
 
 ?>

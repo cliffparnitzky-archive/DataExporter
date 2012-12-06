@@ -47,7 +47,16 @@ class ContentDataExporterForm extends ContentElement {
 	 * Generate content element
 	 */
 	protected function compile() {
+		// Use a custom template
+		if ($this->exporterFormTemplate != $strTemplate) {
+			$this->strTemplate = $this->exporterFormTemplate;
+
+			$this->Template = new FrontendTemplate($this->strTemplate);
+			$this->Template->setData($this->arrData);
+		}
+		
 		$this->Template->formSubmit = $this->id;
+		$this->Template->button = $GLOBALS['TL_LANG']['MSC']['exportBT'];
 	}
 }
 

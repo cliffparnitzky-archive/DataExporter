@@ -30,9 +30,11 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_content']['exportFolder']  = array('Export Ordner', 'Wählen Sie den Ordner der Exportdateien.');
-$GLOBALS['TL_LANG']['tl_content']['fileExtension'] = array('Dateiendung', 'Wählen Sie die Exportdateiendung. Falls die gewünschte Dateiendung nicht vorhanden ist, muss sie in der Liste der <i>Erlaubte Download-Dateitypen</i> in den System Einstellungen eingetragen werden.');
-$GLOBALS['TL_LANG']['tl_content']['exporter']      = array('Exporter', 'Wählen Sie Exporter.');
+$GLOBALS['TL_LANG']['tl_content']['exportFolder']         = array('Export Ordner', 'Wählen Sie den Ordner der Exportdateien.');
+$GLOBALS['TL_LANG']['tl_content']['fileExtension']        = array('Dateiendung', 'Wählen Sie die Exportdateiendung. Falls die gewünschte Dateiendung nicht vorhanden ist, muss sie in der Liste der <i>Erlaubte Download-Dateitypen</i> in den System Einstellungen eingetragen werden.');
+$GLOBALS['TL_LANG']['tl_content']['exporter']             = array('Exporter', 'Wählen Sie einen Exporter.');
+$GLOBALS['TL_LANG']['tl_content']['exporterFormTemplate'] = array('Formular Template', 'Wählen Sie ein Template für das Exporter Formular.');
+$GLOBALS['TL_LANG']['tl_content']['exporterListTemplate'] = array('Listen Template', 'Wählen Sie ein Template für die Exporter Liste.');
 
 /**
  * Legends

@@ -52,6 +52,10 @@ class DataExporterExecutor extends Controller {
 	 */
 	public function run()
 	{
+		$errorMsg = 'the export executer was not called through the contao framework';
+		
+		$allowedDownload = trimsplit(',', strtolower($GLOBALS['TL_CONFIG']['allowedDownload']));
+
 		if (strlen($this->Input->post("FORM_SUBMIT")) > 0) {
 			$ceId = $this->Input->post("FORM_SUBMIT");
 			
@@ -60,18 +64,27 @@ class DataExporterExecutor extends Controller {
 										->execute($ceId);
 			
 			$exporter = $objConfig->exporter;
+			$errorMsg = 'the defined exporter class <i>' . $exporter . '</i> does not exists';
 			if ($this->classFileExists($exporter)) {
+				$errorMsg = 'the defined exporter is not an instance of <i>AbstractDataExporter</i>';
 				$dataExporter = new $exporter;
 				if ($dataExporter instanceof AbstractDataExporter) {
+					$errorMsg = 'an error occured while exporting';
 					$file = $dataExporter->createExportFile($objConfig);
 					// Send the file to the browser
-					if ($file != '') {
-						$this->sendFileToBrowser($file);
+					$errorMsg = 'the export file does not exists';
+					if (is_file(TL_ROOT . '/' . $file)) {
+						$errorMsg = 'its not allowed to download the export file';
+						$objFile = new File($file);
+						if (in_array($objFile->extension, $allowedDownload)) {
+							$this->sendFileToBrowser($file);
+							return;
+						}
 					}
 				}
 			}
 		}
-		echo "<html><head></head><body><br><b>Export error</b>: somthing went wrong, maybe the export executer was not called through the contao framework, or the defined exporter class does not exists, or the defined exporter is not an instance of <i>AbstractDataExporter</i></body></html>";
+		echo "<html><head></head><body><br><b>Export error</b>: something went wrong, " . $errorMsg . ".</body></html>";
 	}
 }
 

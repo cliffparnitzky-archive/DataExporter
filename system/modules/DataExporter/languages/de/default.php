@@ -32,4 +32,9 @@
  */
 $GLOBALS['TL_LANG']['MSC']['exportBT'] = 'Exportieren';
 
+/**
+ * Exportes
+ */
+$GLOBALS['TL_LANG']['DATA_EXPORTER'][''] = '-';
+
 ?>

@@ -41,7 +41,7 @@ class ContentDataExporterList extends ContentElement {
 	 * Template
 	 * @var string
 	 */
-	protected $strTemplate = 'ce_data_exporter_list';
+	protected $strTemplate = 'ce_data_exporter_list_default';
 	
 	/**
 	 * Return if there are no files
@@ -63,8 +63,15 @@ class ContentDataExporterList extends ContentElement {
 	/**
 	 * Generate the content element
 	 */
-	protected function compile()
-	{
+	protected function compile() {
+		// Use a custom template
+		if ($this->exporterListTemplate != $strTemplate) {
+			$this->strTemplate = $this->exporterListTemplate;
+
+			$this->Template = new FrontendTemplate($this->strTemplate);
+			$this->Template->setData($this->arrData);
+		}
+		
 		$files = array();
 		$auxDate = array();
 
