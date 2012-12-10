@@ -2,7 +2,7 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2011 Leo Feyer
+ * Copyright (C) 2005-2012 Leo Feyer
  *
  * Formerly known as TYPOlight Open Source CMS.
  *
@@ -10,12 +10,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -28,43 +28,17 @@
  */
 
 /**
- * Class ContentDataExporterForm
- *
- * Front end content element for exporting the data.
- * @copyright  Cliff Parnitzky 2012
- * @author     Cliff Parnitzky
- * @package    Controller
+ * Fields
  */
-class ContentDataExporterForm extends ContentElement {
+$GLOBALS['TL_LANG']['tl_content']['exportFolder']         = array('Export folder', 'Select a folder for the export files.');
+$GLOBALS['TL_LANG']['tl_content']['fileExtension']        = array('File extension', 'Select a file extension. If your desired file extension is not in the list, it has to be added to <i>Download file types</i> in system settings.');
+$GLOBALS['TL_LANG']['tl_content']['exporter']             = array('Exporter', 'Select an exporter.');
+$GLOBALS['TL_LANG']['tl_content']['exporterFormTemplate'] = array('Form template', 'Select a template for the form.');
+$GLOBALS['TL_LANG']['tl_content']['exporterListTemplate'] = array('List template', 'Select a template for the export list.');
 
-	/**
-	 * Template
-	 * @var string
-	 */
-	protected $strTemplate = 'ce_data_exporter_form_default';
-
-	/**
-	 * Return if there are no files
-	 * @return string
-	 */
-	public function generate()
-	{
-		// Use a custom template
-		if ($this->exporterFormTemplate != $strTemplate) {
-			$this->strTemplate = $this->exporterFormTemplate;
-		}
-
-		return parent::generate();
-	}
-  
-	
-	/**
-	 * Generate content element
-	 */
-	protected function compile() {
-		$this->Template->formSubmit = $this->id;
-		$this->Template->button = $GLOBALS['TL_LANG']['MSC']['exportBT'];
-	}
-}
+/**
+ * Legends
+ */
+$GLOBALS['TL_LANG']['tl_content']['export_legend'] = 'Export';
 
 ?>

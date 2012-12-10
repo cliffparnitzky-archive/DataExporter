@@ -37,6 +37,6 @@ $GLOBALS['TL_LANG']['CTE']['dataExporterList'] = array('Export Liste', 'Stellt e
 /**
  * Define name and tooltip for preferences (inactive modules)
  */
-$GLOBALS['TL_LANG']['MOD']['DataExporter'] = array('Datenexport', 'Stellt Inhaltselemente für den Export von Daten zur Verfügung.');
+$GLOBALS['TL_LANG']['MOD']['DataExporter'] = 'Stellt Inhaltselemente für den Export von Daten zur Verfügung.';
 
 ?>

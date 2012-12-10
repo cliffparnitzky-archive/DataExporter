@@ -2,7 +2,7 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2011 Leo Feyer
+ * Copyright (C) 2005-2012 Leo Feyer
  *
  * Formerly known as TYPOlight Open Source CMS.
  *
@@ -10,12 +10,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -28,43 +28,13 @@
  */
 
 /**
- * Class ContentDataExporterForm
- *
- * Front end content element for exporting the data.
- * @copyright  Cliff Parnitzky 2012
- * @author     Cliff Parnitzky
- * @package    Controller
+ * Buttons
  */
-class ContentDataExporterForm extends ContentElement {
+$GLOBALS['TL_LANG']['MSC']['exportBT'] = 'Export';
 
-	/**
-	 * Template
-	 * @var string
-	 */
-	protected $strTemplate = 'ce_data_exporter_form_default';
-
-	/**
-	 * Return if there are no files
-	 * @return string
-	 */
-	public function generate()
-	{
-		// Use a custom template
-		if ($this->exporterFormTemplate != $strTemplate) {
-			$this->strTemplate = $this->exporterFormTemplate;
-		}
-
-		return parent::generate();
-	}
-  
-	
-	/**
-	 * Generate content element
-	 */
-	protected function compile() {
-		$this->Template->formSubmit = $this->id;
-		$this->Template->button = $GLOBALS['TL_LANG']['MSC']['exportBT'];
-	}
-}
+/**
+ * Exportes
+ */
+$GLOBALS['TL_LANG']['DATA_EXPORTER'][''] = '-';
 
 ?>
