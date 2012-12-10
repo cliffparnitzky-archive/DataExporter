@@ -67,7 +67,7 @@ class DataExporterExecutor extends Controller {
 			$errorMsg = 'the defined exporter class <i>' . $exporter . '</i> does not exists';
 			if ($this->classFileExists($exporter)) {
 				$errorMsg = 'the defined exporter is not an instance of <i>AbstractDataExporter</i>';
-				$dataExporter = new $exporter;
+				$dataExporter = new $exporter();
 				if ($dataExporter instanceof AbstractDataExporter) {
 					$errorMsg = 'an error occured while exporting';
 					$file = $dataExporter->createExportFile($objConfig);
