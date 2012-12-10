@@ -44,6 +44,20 @@ abstract class AbstractDataExporter {
 	 * @return The path to the new file.
 	 */
 	public abstract function createExportFile($objConfig);
+	
+	/**
+	 * Creates a new file in the given export folder, with the given name and extension
+	 *
+	 * @param objConfig The configuration from database (equivalent to the configuratrion of the content element).
+	 * @param fileName The file name to be used.
+	 * @param fileExtension The file extension to be used.
+	 *
+	 * @return The new file.
+	 */
+	protected function createFile($objConfig, $fileName, $fileExtension) {
+		$filePath = $objConfig->exportFolder . '/' . $fileName . '.' . $fileExtension;
+		return new File($filePath);
+	}
 }
 
 ?>
