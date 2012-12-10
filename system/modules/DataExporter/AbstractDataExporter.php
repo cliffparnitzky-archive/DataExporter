@@ -35,7 +35,7 @@
  * @author     Cliff Parnitzky
  * @package    Controller
  */
-abstract class AbstractDataExporter {
+abstract class AbstractDataExporter extends System {
 	/**
 	 * Create the export file.
 	 * 
