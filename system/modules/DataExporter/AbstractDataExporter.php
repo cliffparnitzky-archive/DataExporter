@@ -54,9 +54,15 @@ abstract class AbstractDataExporter extends System {
 	 *
 	 * @return The new file.
 	 */
-	protected function createFile($objConfig, $fileName, $fileExtension) {
+	protected function createFile($objConfig, $fileName, $fileExtension, $createEmpty = true) {
 		$filePath = $objConfig->exportFolder . '/' . $fileName . '.' . $fileExtension;
-		return new File($filePath);
+		$file = new File($filePath);
+		
+		if ($createEmpty) {
+			$file->write("");
+		}
+		
+		return $file;
 	}
 }
 
