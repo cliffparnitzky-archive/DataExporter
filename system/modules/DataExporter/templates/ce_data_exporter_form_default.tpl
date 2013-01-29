@@ -5,8 +5,7 @@
 <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
 <?php endif; ?>
 
-<form action="system/modules/DataExporter/DataExporterExecutor.php" method="POST">
-	<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+<form action="system/modules/DataExporter/DataExporterExecutor.php" method="post">
 	<input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formSubmit; ?>"> 
 	<input type="submit" name="export" value="<?php echo $this->button; ?>" />
 </form>
