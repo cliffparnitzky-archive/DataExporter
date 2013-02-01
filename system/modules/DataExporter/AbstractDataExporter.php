@@ -59,7 +59,7 @@ abstract class AbstractDataExporter extends System {
 		$file = new File($filePath);
 		
 		if ($createEmpty) {
-			$file->write("");
+			$file->truncate();
 		}
 		
 		return $file;
